@@ -108,6 +108,16 @@
     color: rgba(153, 102, 47, 0.22);
 }
 
+input[type=text] {
+    border: none;
+    background: rgba(244, 231, 218, 0.12);
+    box-shadow: 2px 4px 15px rgba(224, 224, 224, 0.7);
+    border-radius: 4px;
+    padding-left: 20px;
+    width: inherit;
+    outline: 0;
+}
+
 @media(min-width:768px) {
     #wrapper {
         padding-left: 250px;
