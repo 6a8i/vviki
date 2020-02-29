@@ -26,14 +26,9 @@ namespace Cheetos.vviki.WebAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult Get(string id)
+        public Page Get(string id)
         {
-            var product = new PageRepository().Select(id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-            return Ok(product);
+            return new PageRepository().Select(id);
         }
 
         [HttpPost]
@@ -53,6 +48,24 @@ namespace Cheetos.vviki.WebAPI.Controllers
         public async Task Delete(string id)
         {
             new PageRepository().Delete(id);
+        }
+
+        [HttpGet("Search/Tag/{tag}")]
+        public IEnumerable<Page> GetByTag(string tag)
+        {
+            return new PageRepository().SelectByTag(tag);
+        }
+
+        [HttpGet("Search/Tag/{tag}/Value/{value}")]
+        public IEnumerable<Page> GetByTagAndValue(string tag, string value)
+        {
+            return new PageRepository().SelectByTag(tag, value);
+        }
+
+        [HttpGet("Search/Text/{text}")]
+        public IEnumerable<Page> GetByText(string text)
+        {
+            return new PageRepository().SelectByText(text);
         }
     }
 }

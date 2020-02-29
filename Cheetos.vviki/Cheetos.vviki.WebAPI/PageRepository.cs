@@ -60,6 +60,32 @@ namespace Cheetos.vviki.WebAPI
             File.Delete(FormatFileName(id));
         }
 
+        public IEnumerable<Page> SelectByTag(string tag)
+        {
+            return SelectAll().Where(p => p.Tags.ContainsKey(tag));
+        }
+
+        public IEnumerable<Page> SelectByTag(string tag, string value)
+        {
+            return SelectAll().Where(p => p.Tags.ContainsKey(tag) && p.Tags[tag].Contains(value));
+        }
+
+        public IEnumerable<Page> SelectByText(string text)
+        {
+            return SelectAll().Where(p => p.Title.Contains(text) || p.Paragraphs.Any(pa => pa.Contains(text)));
+        }
+
+        public IEnumerable<string> SelectTags()
+        {
+            return SelectAll().SelectMany(p => p.Tags.Keys).Distinct();
+        }
+
+        public IEnumerable<string> SelectTagValues(string tag)
+        {
+            return SelectAll().Where(p => p.Tags.ContainsKey(tag)).Select(p => p.Tags[tag]).Distinct();
+        }
+
+
 
         //Repository.Clone("https://github.com/EdiWang/EnvSetup.git", @"D:\EnvSetup");
 
