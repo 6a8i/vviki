@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LibGit2Sharp;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -11,26 +12,6 @@ namespace Cheetos.vviki.WebAPI.Controllers
     [Route("[controller]")]
     public class PageController : ControllerBase
     {
-
-        private IEnumerable<Page> _pages = new List<Page>()
-        {
-            new Page()
-            {
-                Id = Guid.NewGuid(),
-                Title = "Teste 1",
-                Paragraphs = new List<string>(){ "texto 1 hasdhalsdjhaklsjdh", "Texto 2 sukjhdlakjshdlkasjhdjk" },
-                Tags = new Dictionary<string, string>(){ { "author", "a.beltzac" }, { "category", "microsserviços" } }
-            },
-
-            new Page()
-            {
-                Id = Guid.NewGuid(),
-                Title = "Teste 2",
-                Paragraphs = new List<string>(){ "lksajd alskjd aslkdj  çaskljdç alskd alksjd", "Texto 2 sukjhdlakjshdlkasjhdjk" },
-                Tags = new Dictionary<string, string>(){ { "author", "a.beltzac" } }
-            }
-        };
-
         private readonly ILogger<PageController> _logger;
 
         public PageController(ILogger<PageController> logger)
@@ -41,13 +22,13 @@ namespace Cheetos.vviki.WebAPI.Controllers
         [HttpGet]
         public IEnumerable<Page> GetAll()
         {
-            return _pages;
+            return new PageRepository().SelectAll();
         }
 
         [HttpGet("{id}")]
         public IActionResult Get(string id)
         {
-            var product = _pages.FirstOrDefault((p) => p.Id.ToString() == id);
+            var product = new PageRepository().Select(id);
             if (product == null)
             {
                 return NotFound();
@@ -55,26 +36,23 @@ namespace Cheetos.vviki.WebAPI.Controllers
             return Ok(product);
         }
 
-        //[HttpPost]
-        //public async Task<Page> Post([FromBody]CreatePage requestModel)
-        //{
-        //    var item = await _query.Create(requestModel);
-        //    var model = _mapper.Map<ExpenseModel>(item);
-        //    return model;
-        //}
+        [HttpPost]
+        public async Task Post([FromBody]Page requestModel) //Criar
+        {
+            new PageRepository().Insert(requestModel);
+        }
 
-        //[HttpPut("{id}")]
-        //public async Task<Page> Put(string id, [FromBody]UpdatePage requestModel)
-        //{
-        //    var item = await _query.Update(id, requestModel);
-        //    var model = _mapper.Map<ExpenseModel>(item);
-        //    return model;
-        //}
+        [HttpPut("{id}")]
+        public async Task Put(string id, [FromBody]Page requestModel) //Atualizar
+        {
+            requestModel.Id = id;
+            new PageRepository().Update(requestModel);
+        }
 
-        //[HttpDelete("{id}")]
-        //public async Task Delete(string id)
-        //{
-        //    await _query.Delete(id);
-        //}
+        [HttpDelete("{id}")]
+        public async Task Delete(string id)
+        {
+            new PageRepository().Delete(id);
+        }
     }
 }
