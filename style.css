@@ -118,6 +118,30 @@ input[type=text] {
     outline: 0;
 }
 
+.title-text, #title-text {
+    font-size: 30px;
+    font-family: sans-serif;
+    margin-bottom: 5px;
+}
+ul#paragraph-list {
+    list-style: none;
+}
+
+li.paragraph-item::before {
+    content: "\2630";
+    display: inline-block;
+    margin-left: -1em;
+    position: absolute;
+}
+
+.draggable:hover {
+    cursor: pointer;
+}
+
+li.paragraph-item p {
+    margin-left: 1em;
+}
+
 @media(min-width:768px) {
     #wrapper {
         padding-left: 250px;

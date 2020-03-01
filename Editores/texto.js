@@ -1,13 +1,23 @@
 $(document).ready(function(){
-    $('h1.title-text').dblclick(function(e){
+    $('p.title-text').dblclick(function(){
         $(this).hide();
         $('#title-text').show();
         $('#title-text').focus();
     });
 
     $('#title-text').focusout(function(e){
-        $('h1.title-text').html($(this).val());
+        $('p.title-text').html($(this).val());
         $(this).hide();
-        $('h1.title-text').show();
+        $('p.title-text').show();
+    });
+
+    $(function() {
+        $("ul#paragraph-list").sortable();
+    });
+
+    $('#paragraph-input').change(function()
+    {
+        $('<li class="paragraph-item"><p>' + $(this).val() + '</p></li>').insertBefore(this);
+        $(this).val('Type something to add a new paragraph');
     });
 });
