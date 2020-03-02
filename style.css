@@ -108,7 +108,7 @@
     color: rgba(153, 102, 47, 0.22);
 }
 
-input[type=text] {
+input[type=text], textarea[id=paragraph-input] {
     border: none;
     background: rgba(244, 231, 218, 0.12);
     box-shadow: 2px 4px 15px rgba(224, 224, 224, 0.7);
@@ -116,6 +116,24 @@ input[type=text] {
     padding-left: 20px;
     width: inherit;
     outline: 0;
+}
+
+input[id=paragraph-input], textarea[id=paragraph-input] {
+    color: rgba(130, 87, 40, 0.67);
+    border: 1px dashed rgba(116, 77, 36, 0.23);
+    display: table-cell;
+    width: 100%;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+textarea[id=paragraph-input]::placeholder {
+    color: rgba(130, 87, 40, 0.67);
+}
+
+textarea[id=paragraph-input] {
+    resize: none;
+    overflow: auto;
 }
 
 .title-text, #title-text {
@@ -127,11 +145,12 @@ ul#paragraph-list {
     list-style: none;
 }
 
-li.paragraph-item::before {
+li.draggable::before {
     content: "\2630";
     display: inline-block;
     margin-left: -1em;
     position: absolute;
+    color: rgba(153, 102, 47, 0.22);
 }
 
 .draggable:hover {
