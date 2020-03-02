@@ -18,7 +18,10 @@ $(document).ready(function(){
     $('#paragraph-input').on('keypress',function(e) {
         // 13 is the code for the 'enter' key.
         if(e.shiftKey && e.which == 13) {
-            $('<li class="paragraph-item"><p>' + $(this).val().replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '<br />') + '</p></li>').insertBefore('li.paragraph-input-item');
+            var paragraphs = $(this).val().split(/(\r\n|\n\r|\r|\n)/);
+            paragraphs.forEach(element => {
+                $('<li class="paragraph-item"><p>' + element + '</p></li>').insertBefore('li.paragraph-input-item');
+            });
             $(this).val('');
         }
     });
