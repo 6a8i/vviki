@@ -12,7 +12,17 @@ $(document).ready(function(){
     });
 
     $(function() {
-        $("ul#paragraph-list").sortable();
+        $( "#sortable" ).sortable({
+            placeholder: {
+                element: function(currentItem) {
+                    return $('<li><div class="paragraph-drop"></div></li>')[0];
+                },
+                update: function(container, p) {
+                    return;
+                }
+            }
+          });
+          $( "#sortable" ).disableSelection();
     });
     
     $('#paragraph-input').on('keypress',function(e) {
