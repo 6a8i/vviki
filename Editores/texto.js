@@ -1,6 +1,14 @@
 $(document).ready(function(){
     $(function() {
         $( "#sortable" ).sortable({
+            start: function (event, ui) {
+                if( ui.helper !== undefined )
+                 ui.helper.css('position','absolute').css('margin-top', $(window).scrollTop() );
+            },
+            beforeStop: function (event, ui) {
+                if( ui.offset !== undefined )
+                 ui.helper.css('margin-top', 0);
+            },
             placeholder: {
                 element: function(currentItem) {
                     return $('<li><div class="paragraph-drop"></div></li>');
