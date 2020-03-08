@@ -108,6 +108,70 @@
     color: rgba(153, 102, 47, 0.22);
 }
 
+input[type=text], textarea[id=paragraph-input], textarea[id=paragraph-editor] {
+    border: none;
+    background: rgba(244, 231, 218, 0.12);
+    box-shadow: 2px 4px 15px rgba(224, 224, 224, 0.7);
+    border-radius: 4px;
+    padding-left: 20px;
+    width: inherit;
+    outline: 0;
+}
+
+input[id=paragraph-input], textarea[id=paragraph-input], textarea[id=paragraph-editor] {
+    color: rgba(130, 87, 40, 0.67);
+    border: 1px dashed rgba(116, 77, 36, 0.23);
+    display: table-cell;
+    width: 100%;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+textarea[id=paragraph-input]::placeholder {
+    color: rgba(130, 87, 40, 0.67);
+    height: auto;
+}
+
+textarea[id=paragraph-input], textarea[id=paragraph-editor] {
+    resize: none;
+    overflow: auto;
+}
+
+.title-text, #title-text {
+    font-size: 30px;
+    font-family: sans-serif;
+    margin-bottom: 5px;
+}
+
+ul.paragraph-list {
+    list-style-type: none; margin: 0; padding: 0;
+}
+
+li div.paragraph-drop {
+    background: rgba(240, 160, 74, 0.034);
+    width: inherit;
+    border: 1px dashed rgba(116, 77, 36, 0.23);
+    margin-left: 1em;
+    display: block;
+    height: 2rem;
+}
+
+li.draggable::before {
+    content: "\2630";
+    display: inline-block;
+    margin-left: -1em;
+    position: absolute;
+    color: rgba(153, 102, 47, 0.22);
+}
+
+.draggable:hover {
+    cursor: pointer;
+}
+
+li.paragraph-item p {
+    margin-left: 1em;
+}
+
 @media(min-width:768px) {
     #wrapper {
         padding-left: 250px;
