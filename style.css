@@ -108,7 +108,7 @@
     color: rgba(153, 102, 47, 0.22);
 }
 
-input[type=text], textarea[id=paragraph-input] {
+input[type=text], textarea[id=paragraph-input], textarea[id=paragraph-editor] {
     border: none;
     background: rgba(244, 231, 218, 0.12);
     box-shadow: 2px 4px 15px rgba(224, 224, 224, 0.7);
@@ -118,7 +118,7 @@ input[type=text], textarea[id=paragraph-input] {
     outline: 0;
 }
 
-input[id=paragraph-input], textarea[id=paragraph-input] {
+input[id=paragraph-input], textarea[id=paragraph-input], textarea[id=paragraph-editor] {
     color: rgba(130, 87, 40, 0.67);
     border: 1px dashed rgba(116, 77, 36, 0.23);
     display: table-cell;
@@ -129,9 +129,10 @@ input[id=paragraph-input], textarea[id=paragraph-input] {
 
 textarea[id=paragraph-input]::placeholder {
     color: rgba(130, 87, 40, 0.67);
+    height: auto;
 }
 
-textarea[id=paragraph-input] {
+textarea[id=paragraph-input], textarea[id=paragraph-editor] {
     resize: none;
     overflow: auto;
 }
