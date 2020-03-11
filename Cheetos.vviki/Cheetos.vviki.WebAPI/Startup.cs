@@ -2,10 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Cheetos.vviki.WebAPI.Context;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -32,6 +34,10 @@ namespace Cheetos.vviki.WebAPI
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
             });
+
+            services.AddDbContext<VVikiContext>(options => options.UseNpgsql(Configuration["ConnectionStrings:VVikiDB"]));
+
+            services.AddScoped<IPageRepository, PageRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

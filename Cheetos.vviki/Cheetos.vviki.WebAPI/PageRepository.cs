@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using Cheetos.vviki.WebAPI.Context;
+using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -7,95 +9,72 @@ using System.Threading.Tasks;
 
 namespace Cheetos.vviki.WebAPI
 {
-    public class PageRepository
+    public class PageRepository : IPageRepository
     {
-        private string _repoFolder => "repo";
+        private readonly VVikiContext _context; 
 
-        private string FormatFileName(string id) => $"{_repoFolder}\\{id}.json";
-
-        public Page Select(string id)
+        public PageRepository(VVikiContext context)
         {
-            using StreamReader file = File.OpenText(FormatFileName(id));
-            JsonSerializer serializer = new JsonSerializer();
-            return (Page)serializer.Deserialize(file, typeof(Page));
+            _context = context;
+        }
+
+        private IQueryable<Page> PagesIncludeAll()
+        {
+            return _context.Page.Include(p => p.Tags).Include(p => p.Paragraphs);
+        }
+
+        public Page Select(Guid id)
+        {
+            return PagesIncludeAll().FirstOrDefault(p => p.Id == id);
         }
 
         public IEnumerable<Page> SelectAll()
         {
-            var loadedPages = new List<Page>();
-
-            var files = Directory.GetFiles(_repoFolder);
-
-            foreach(string f in files)
-            {
-                string id = Path.GetFileNameWithoutExtension(f);
-                loadedPages.Add(Select(id));
-            }
-
-            return loadedPages;
-        }
-
-        private void InsertAsIs(Page page)
-        {
-            using StreamWriter file = File.CreateText(FormatFileName(page.Id.ToString()));
-            JsonSerializer serializer = new JsonSerializer();
-            serializer.Formatting = Formatting.Indented;
-            serializer.Serialize(file, page);
+            return PagesIncludeAll();
         }
 
         public void Insert(Page page)
         {
-            page.Id = Guid.NewGuid().ToString();
-            InsertAsIs(page);
+            _context.Page.Add(page);
+            _context.SaveChanges();
         }
 
         public void Update(Page page)
         {
-            Delete(page.Id);
-            InsertAsIs(page);
+            _context.Page.Update(page);
+            _context.SaveChanges();
         }
 
-        public void Delete(string id)
+        public void Delete(Guid id)
         {
-            File.Delete(FormatFileName(id));
+            var page = _context.Page.First(p => p.Id == id);
+            _context.Page.Remove(page);
+            _context.SaveChanges();
         }
 
         public IEnumerable<Page> SelectByTag(string tag)
         {
-            return SelectAll().Where(p => p.Tags.ContainsKey(tag));
+            return PagesIncludeAll().Where(p => p.Tags.Any(t => t.Key == tag));
         }
 
         public IEnumerable<Page> SelectByTag(string tag, string value)
         {
-            return SelectAll().Where(p => p.Tags.ContainsKey(tag) && p.Tags[tag].Contains(value));
+            return PagesIncludeAll().Where(p => p.Tags.Any(t => t.Key == tag && t.Value == value));
         }
 
         public IEnumerable<Page> SelectByText(string text)
         {
-            return SelectAll().Where(p => p.Title.Contains(text) || p.Paragraphs.Any(pa => pa.Contains(text)));
+            return PagesIncludeAll().Where(p => p.Title.Contains(text) || p.Paragraphs.Any(pa => pa.Text.Contains(text))); 
         }
 
         public IEnumerable<string> SelectTags()
         {
-            return SelectAll().SelectMany(p => p.Tags.Keys).Distinct();
+            return _context.Tag.Select(t => t.Key).Distinct();
         }
 
         public IEnumerable<string> SelectTagValues(string tag)
         {
-            return SelectAll().Where(p => p.Tags.ContainsKey(tag)).Select(p => p.Tags[tag]).Distinct();
+            return _context.Tag.Where(t => t.Key == tag).Select(t => t.Value).Distinct();
         }
-
-
-
-        //Repository.Clone("https://github.com/EdiWang/EnvSetup.git", @"D:\EnvSetup");
-
-        //using (var repo = new Repository(@"D:\GitHub\Moonglade"))
-        //{
-        //    repo.Commit("bla bla", new Signature(), new Signature());
-
-        //        repo.Network.Pull
-
-        //}
-
     }
 }

@@ -13,22 +13,24 @@ namespace Cheetos.vviki.WebAPI.Controllers
     public class TagController : ControllerBase
     {
         private readonly ILogger<PageController> _logger;
+        private readonly IPageRepository _pageRepository;
 
-        public TagController(ILogger<PageController> logger)
+        public TagController(ILogger<PageController> logger, IPageRepository pageRepository)
         {
             _logger = logger;
+            _pageRepository = pageRepository;
         }
 
         [HttpGet]
         public IEnumerable<string> GetAll()
         {
-            return new PageRepository().SelectTags();
+            return _pageRepository.SelectTags();
         }
 
         [HttpGet("{tag}")]
         public IEnumerable<string> Get(string tag)
         {
-            return new PageRepository().SelectTagValues(tag);
+            return _pageRepository.SelectTagValues(tag);
         }
     }
 }

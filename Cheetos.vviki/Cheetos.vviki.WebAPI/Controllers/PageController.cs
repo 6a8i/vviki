@@ -13,59 +13,61 @@ namespace Cheetos.vviki.WebAPI.Controllers
     public class PageController : ControllerBase
     {
         private readonly ILogger<PageController> _logger;
+        private readonly IPageRepository _pageRepository;
 
-        public PageController(ILogger<PageController> logger)
+        public PageController(ILogger<PageController> logger, IPageRepository pageRepository)
         {
             _logger = logger;
+            _pageRepository = pageRepository;
         }
 
         [HttpGet]
         public IEnumerable<Page> GetAll()
         {
-            return new PageRepository().SelectAll();
+            return _pageRepository.SelectAll();
         }
 
         [HttpGet("{id}")]
         public Page Get(string id)
         {
-            return new PageRepository().Select(id);
+            return _pageRepository.Select(Guid.Parse(id));
         }
 
         [HttpPost]
         public async Task Post([FromBody]Page requestModel) //Criar
         {
-            new PageRepository().Insert(requestModel);
+            _pageRepository.Insert(requestModel);
         }
 
         [HttpPut("{id}")]
         public async Task Put(string id, [FromBody]Page requestModel) //Atualizar
         {
-            requestModel.Id = id;
-            new PageRepository().Update(requestModel);
+            requestModel.Id = Guid.Parse(id);
+            _pageRepository.Update(requestModel);
         }
 
         [HttpDelete("{id}")]
         public async Task Delete(string id)
         {
-            new PageRepository().Delete(id);
+            _pageRepository.Delete(Guid.Parse(id));
         }
 
         [HttpGet("Search/Tag/{tag}")]
         public IEnumerable<Page> GetByTag(string tag)
         {
-            return new PageRepository().SelectByTag(tag);
+            return _pageRepository.SelectByTag(tag);
         }
 
         [HttpGet("Search/Tag/{tag}/Value/{value}")]
         public IEnumerable<Page> GetByTagAndValue(string tag, string value)
         {
-            return new PageRepository().SelectByTag(tag, value);
+            return _pageRepository.SelectByTag(tag, value);
         }
 
         [HttpGet("Search/Text/{text}")]
         public IEnumerable<Page> GetByText(string text)
         {
-            return new PageRepository().SelectByText(text);
+            return _pageRepository.SelectByText(text);
         }
     }
 }
