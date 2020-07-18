@@ -1,0 +1,14 @@
+{
+    "titulo": "Bem Vindo",
+    "paragrafos": [
+        {
+            "descricao": "Bem vindo ao VViki, a nova forma de ter um wiki."
+        },
+        {
+            "descricao": "Essa página é apenas de exemplo! E no menu, ao lado esquerdo, contêm outras páginas explicativas."
+        },
+        {
+            "descricao": "Esperamos que goste do VViki!!!"
+        }
+    ]
+}

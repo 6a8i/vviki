@@ -1,22 +1,42 @@
-/*!
- * Start Bootstrap - Simple Sidebar (https://startbootstrap.com/)
- * Copyright 2013-2016 Start Bootstrap
- * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
- */
-
- body, h1, h2, ul, li, p {
+body, h1, h2, ul, li, p {
     padding: 0px;
     margin: 0px;
-    overflow-x: hidden;
 }
 
 ul {
     list-style: none;
 }
 
-/* Toggle Styles */
-
 #app {
+    display: flex;
+}
+
+.menu_lateral {
+    max-width: 250px;
+    background: #000000;
+    color: #ffffff;
+    height: 100vh;
+}
+
+.menu_logo {
+    font-size: 2rem;
+    margin-bottom: 30px;
+    text-align: center;
+    border-bottom: 1px solid rgba(224, 224, 224, 0.521);
+    padding: 20px 30px;
+}
+
+.menu_pagina {
+    cursor: pointer;
+    padding: 20px 30px;
+}
+
+.menu_pagina:active {
+    background: #ffffff;
+    color: #000000;
+}
+
+#wrapper {
     padding-left: 0;
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
@@ -24,7 +44,7 @@ ul {
     transition: all 0.5s ease;
 }
 
-#app.toggled {
+#wrapper.toggled {
     padding-left: 250px;
 }
 
@@ -44,7 +64,7 @@ ul {
     box-shadow: 2px 2px 10px 0 rgb(187, 185, 185);
 }
 
-#app.toggled #sidebar-wrapper {
+#wrapper.toggled #sidebar-wrapper {
     width: 250px;
 }
 
@@ -55,7 +75,7 @@ ul {
     background: #FFF9F4;
 }
 
-#app.toggled #page-content-wrapper {
+#wrapper.toggled #page-content-wrapper {
     position: absolute;
     margin-right: -250px;
 }
@@ -178,11 +198,11 @@ li.paragraph-item p {
 }
 
 @media(min-width:768px) {
-    #app {
+    #wrapper {
         padding-left: 250px;
     }
 
-    #app.toggled {
+    #wrapper.toggled {
         padding-left: 0;
     }
 
@@ -190,7 +210,7 @@ li.paragraph-item p {
         width: 250px;
     }
 
-    #app.toggled #sidebar-wrapper {
+    #wrapper.toggled #sidebar-wrapper {
         width: 0;
     }
 
@@ -199,7 +219,7 @@ li.paragraph-item p {
         position: relative;
     }
 
-    #app.toggled #page-content-wrapper {
+    #wrapper.toggled #page-content-wrapper {
         position: relative;
         margin-right: 0;
     }

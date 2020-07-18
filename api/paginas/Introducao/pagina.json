@@ -1,0 +1,17 @@
+{
+    "titulo": "Introdução",
+    "paragrafos": [
+        {
+            "descricao": "The VViki is a simple web app wiki. Here you can use your imagination to do what you want. But wait! Below there is a little tutorial with some tricks for you. Enjoy it!"
+        },
+        {
+            "descricao": "Double click over the title text to edit it."
+        },
+        {
+            "descricao": "To print anything from the input box in here is just press <code>shift+enter</code>."
+        },
+        {
+            "descricao": "<code>.pg</code> for pages and <code>.fdr</code> for folders. <code>This can be change, not defined yet.</code>"
+        }
+    ]
+}
